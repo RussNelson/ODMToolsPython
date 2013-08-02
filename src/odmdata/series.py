@@ -6,9 +6,11 @@ from variable import Variable
 from method import Method
 from source import Source
 from quality_control_level import QualityControlLevel
+from data_value import copy_data_value
 
-def copy(from_series):
+def copy_series(from_series):
 	new = Series()
+	new.data_values = [copy_data_value(dv) for dv in from_series.data_values]
 	new.site_id = from_series.site_id
 	new.site_code = from_series.site_code
 	new.site_name = from_series.site_name
@@ -97,8 +99,9 @@ class Series(Base):
 			'Speciation', 'VariableUnitsID', 'VariableUnitsName', 'SampleMedium', 'ValueType', 'TimeSupport',
 			'TimeUnitsID', 'TimeUnitsName', 'DataType', 'GeneralCategory', 'MethodID', 'MethodDescription',
 			'SourceID', 'SourceDescription', 'Organization', 'Citation', 'QualityControlLevelID', 'QualityControlLevelCode', 
-			'BeginDateTime', 'EndDateTime', 'BeginDateTimeUTC', 'EndDateTimeUTC', 'ValueCount'	]
-	def getValues(self):
+			'BeginDateTime', 'EndDateTime', 'BeginDateTimeUTC', 'EndDateTimeUTC', 'ValueCount']
+			
+	def get_list_repr(self):
 		return [self.id, self.site_id, self.site_code, self.site_name, self.variable_id, self.variable_code, 
 				self.variable_name, self.speciation, self.variable_units_id, self.variable_units_name, 
 				self.sample_medium, self.value_type, self.time_support, self.time_units_id, self.time_units_name, 

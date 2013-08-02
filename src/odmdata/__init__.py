@@ -28,6 +28,9 @@ from variable_name_cv import VariableNameCV
 from vertical_datum_cv import VerticalDatumCV
 from memory_database import MemoryDatabase
 
+from series import copy_series
+from data_value import copy_data_value
+
 __all__ = [
     'Base',
     'CensorCodeCV',
