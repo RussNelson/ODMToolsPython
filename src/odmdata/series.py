@@ -99,8 +99,9 @@ class Series(Base):
 			'Speciation', 'VariableUnitsID', 'VariableUnitsName', 'SampleMedium', 'ValueType', 'TimeSupport',
 			'TimeUnitsID', 'TimeUnitsName', 'DataType', 'GeneralCategory', 'MethodID', 'MethodDescription',
 			'SourceID', 'SourceDescription', 'Organization', 'Citation', 'QualityControlLevelID', 'QualityControlLevelCode', 
-			'BeginDateTime', 'EndDateTime', 'BeginDateTimeUTC', 'EndDateTimeUTC', 'ValueCount'	]
-	def getValues(self):
+			'BeginDateTime', 'EndDateTime', 'BeginDateTimeUTC', 'EndDateTimeUTC', 'ValueCount']
+			
+	def get_list_repr(self):
 		return [self.id, self.site_id, self.site_code, self.site_name, self.variable_id, self.variable_code, 
 				self.variable_name, self.speciation, self.variable_units_id, self.variable_units_name, 
 				self.sample_medium, self.value_type, self.time_support, self.time_units_id, self.time_units_name, 

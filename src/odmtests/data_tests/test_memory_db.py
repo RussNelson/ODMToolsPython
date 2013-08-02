@@ -42,6 +42,13 @@ class TestMemoryDB:
 		assert outside_dv.site_id == inside_dv[6]
 		assert outside_dv.variable_id == inside_dv[7]
 
+	def test_get_data_values_len(self):
+		memory_db = MemoryDatabase(self.series)
+		dvs = memory_db.get_data_values()
+		assert len(dvs) == len(self.series.data_values)
+
+	
+
 
 	# def test_delete_points(self):
 	# 	with pytest.raises(NotImplementedError):
