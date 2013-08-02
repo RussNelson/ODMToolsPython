@@ -6,9 +6,11 @@ from variable import Variable
 from method import Method
 from source import Source
 from quality_control_level import QualityControlLevel
+from data_value import copy_data_value
 
-def copy(from_series):
+def copy_series(from_series):
 	new = Series()
+	new.data_values = [copy_data_value(dv) for dv in from_series.data_values]
 	new.site_id = from_series.site_id
 	new.site_code = from_series.site_code
 	new.site_name = from_series.site_name
