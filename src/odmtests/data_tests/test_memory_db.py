@@ -31,6 +31,7 @@ class TestMemoryDB:
 		dvs = memory_db.get_data_values()
 		assert len(dvs) == 0
 
+<<<<<<< HEAD
 	def test_get_data_values(self):
 		memory_db = MemoryDatabase(self.series)
 		dvs = memory_db.get_data_values()
@@ -61,3 +62,8 @@ class TestMemoryDB:
 	# def test_update_points(self):
 	# 	with pytest.raises(NotImplementedError):
 	# 		self.memory_db.update_points("filter", [1,2,3])
+=======
+	def test_get_data_values_is_empty(self):
+		dvs = self.memory_db.get_data_values()
+		assert len(dvs) == 0
+>>>>>>> master

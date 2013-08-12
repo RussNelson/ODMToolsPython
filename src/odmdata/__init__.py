@@ -61,4 +61,6 @@ __all__ = [
     'VariableNameCV',
     'VerticalDatumCV',
     'MemoryDatabase',
+    'copy_series',
+    'copy_data_value'
 ]

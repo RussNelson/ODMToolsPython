@@ -186,16 +186,14 @@ class SeriesPlotInfo(object):
 
 
                 seriesID = key
-                series =  self.dbConn.series_service.get_series_by_id(seriesID)# get from db
-                # variable =self.dbservice.get_variable_by_id(series.variable_id)
-
+                series =  self.dbConn.series_service.get_series_by_id(seriesID)
                 strStartDate= series.begin_date_time#self._plotOptions._startDateTime
                 strEndDate = series.end_date_time#self._plotOptions._endDateTime#+1 day - 1 millisecond
                 variableName = series.variable_name
                 unitsName = series.variable_units_name
                 siteName = series.site_name
                 dataType = series.data_type
-                noDataValue = self.dbConn.series_service.get_no_data_value(series.variable_id)[0]#variable.no_data_value
+                noDataValue = series.variable.no_data_value
                 if self.editID == seriesID:
                     data = self.dbConn.getEditDataValuesforGraph()
                 else:

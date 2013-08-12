@@ -20,11 +20,11 @@ def add_series(session):
 	series.site = site
 	series.site_code = site.code
 	series.variable = var
-	series.variable_code == var.code
+	series.variable_code = var.code
 	series.method = method
-	series.method_description == method.description
+	series.method_description = method.description
 	series.source = source
-	series.source_description == source.description
+	series.source_description = source.description
 	series.quality_control_level_id = qcl.id
 	series.quality_control_level_code = qcl.code
 
@@ -258,3 +258,10 @@ def add_sample_type_cv(session):
 	session.add(sample_type)
 	session.commit()
 	return sample_type
+
+def add_version(session):
+	version = ODMVersion()
+	version.version_number = "1.0.0.0.1alpha"
+	session.add(version)
+	session.commit()
+	return version

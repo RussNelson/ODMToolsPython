@@ -50,18 +50,25 @@ class DataValue(Base):
 	source_id		    	 = Column('SourceID', Integer, ForeignKey('Sources.SourceID'), nullable=False)
 	sample_id			  	 = Column('SampleID', Integer, ForeignKey('Samples.SampleID'))
 	derived_from_id	    	 = Column('DerivedFromID', Integer)
-	quality_control_level_id = Column('QualityControlLevelID', Integer, ForeignKey('QualityControlLevels.QualityControlLevelID'))
+	quality_control_level_id = Column('QualityControlLevelID', Integer, ForeignKey('QualityControlLevels.QualityControlLevelID'), nullable=False)
 
 	# relationships
 	site 				  = relationship(Site)
 	variable 			  = relationship(Variable)
-	qualifier 			  = relationship(Qualifier)
 	method 				  = relationship(Method)
 	source 				  = relationship(Source)
 	quality_control_level = relationship(QualityControlLevel)
+
+	qualifier 			  = relationship(Qualifier)
 	offset_type			  = relationship(OffsetType)
 	sample 				  = relationship(Sample)
 
+	def list_repr(self):
+		return [self.id, self.data_value, self.value_accuracy, self.local_date_time,
+			self.utc_offset, self.date_time_utc, self.site_id, self.variable_id, 
+			self.offset_value, self.offset_type_id, self.censor_code, self.qualifier_id,
+			self.method_id, self.source_id, self.sample_id, self.derived_from_id,
+			self.quality_control_level_id]
 
 	def get_list_repr(self):
 		return [self.id, self.data_value, self.value_accuracy, self.local_date_time,
@@ -72,6 +79,3 @@ class DataValue(Base):
 
 	def __repr__(self):
 		return "<DataValue('%s', '%s')>" % (self.data_value, self.local_date_time)
-
-	def toTuple(self):
-		pass

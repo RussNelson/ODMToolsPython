@@ -24,7 +24,7 @@ from odmservices import ServiceManager
 
 
 ##########only use this section when testing series selector #############
-from odmservices import ServiceManager
+
 
 def create(parent):
     return test_ss(parent)
@@ -40,8 +40,8 @@ class test_ss(wx.Frame):
         style="wx.TAB_TRAVERSAL"
         name=u'pnlSelector'
         service_manager = ServiceManager()
-        dbservice= service_manager.get_series_service()
-        pnl= pnlSeriesSelector(parent= self, id=id, size=size, style=style, name=name, dbservice = dbservice,pos = pos)
+        series_service= service_manager.get_series_service()
+        pnl= pnlSeriesSelector(parent= self, id=id, size=size, style=style, name=name, series_service = series_service,pos = pos)
 
 ##################################################################
 
@@ -246,11 +246,11 @@ class pnlSeriesSelector(wx.Panel):
 
 
 
-    def __init__(self, parent, id,  size, style, name, dbservice,pos=None,):
+    def __init__(self, parent, id,  size, style, name, series_service,pos=None,):
         self.parent= parent
         self._init_ctrls(parent)
 
-        self.dbservice = dbservice
+        self.series_service = series_service
         self.initTableSeries()
         self.initSVBoxes()
 
@@ -258,10 +258,10 @@ class pnlSeriesSelector(wx.Panel):
         self.export_service = sm.get_export_service()
 
 
-    def resetDB(self, dbservice):
+    def resetDB(self, series_service):
 
         #####INIT DB Connection
-        self.dbservice = dbservice
+        self.series_service = series_service
         self.tableSeries.Clear()
         self.cbVariables.Clear()
         self.cbSites.Clear()
@@ -274,10 +274,10 @@ class pnlSeriesSelector(wx.Panel):
         self.Layout()
 
     def initTableSeries(self):
-        self.dataRep=MemoryDatabase(self.dbservice)
+##        self.dataRep=MemoryDatabase(self.dbservice)
 
-        self.tableSeries.SetColumns(self.dataRep.getSeriesColumns())
-        self.tableSeries.SetObjects(self.dataRep.getSeriesCatalog())
+        self.tableSeries.SetColumns(self.series_service.get_series()[0].get_table_columns())
+        self.tableSeries.SetObjects([list(x) for x in self.series_service.get_all_series_tuples()])
 
 
     def initSVBoxes(self):
@@ -285,14 +285,14 @@ class pnlSeriesSelector(wx.Panel):
         self.site_code = None
         self.variable_code = None
         #####INIT drop down boxes for Simple Filter
-        self.siteList=self.dbservice.get_sites()
+        self.siteList=self.series_service.get_sites()
 
         for site in self.siteList:
             self.cbSites.Append(site.site_code+'-'+site.site_name)
         self.cbSites.SetSelection(0)
         self.site_code = self.siteList[0].site_code
 
-        self.varList= self.dbservice.get_variables(self.site_code)
+        self.varList= self.series_service.get_variables(self.site_code)
         for var in self.varList:
             self.cbVariables.Append(var.variable_code+'-'+var.variable_name)
         self.cbVariables.SetSelection(0)
@@ -413,7 +413,7 @@ class pnlSeriesSelector(wx.Panel):
 
 
         self.varList =[]
-        self.varList= self.dbservice.get_variables(self.site_code)
+        self.varList= self.series_service.get_variables(self.site_code)
 
         self.cbVariables.Clear()
         for var in self.varList:
@@ -444,7 +444,7 @@ class pnlSeriesSelector(wx.Panel):
 
     def siteAndVariables(self):
         self.cbVariables.Clear()
-        self.varList= self.dbservice.get_variables(self.site_code)
+        self.varList= self.series_service.get_variables(self.site_code)
         for var in self.varList:
             self.cbVariables.Append(var.variable_code+'-'+var.variable_name)
         self.cbVariables.SetSelection(0)
@@ -477,7 +477,7 @@ class pnlSeriesSelector(wx.Panel):
     def variableOnly(self):
         self.site_code = None
         self.cbVariables.Clear()
-        self.varList= self.dbservice.get_variables()
+        self.varList= self.series_service.get_variables()
         for var in self.varList:
             self.cbVariables.Append(var.variable_code+'-'+var.variable_name)
         self.cbVariables.SetSelection(0)

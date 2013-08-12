@@ -49,6 +49,7 @@ class SeriesService():
 			result = self._edit_session.query(distinct(Series.variable_id), Series.variable_code, Series.variable_name).order_by(Series.variable_code).all()
 
 		return result
+
 	def get_vars(self):
 		try:
 			result = self._edit_session.query(Variable).all()
@@ -122,8 +123,8 @@ class SeriesService():
 			result = None
 		return result
 
-	def get_all_series(self):
-		return self._edit_session.query(Series).all()
+##	def get_all_series(self):
+##		return self._edit_session.query(Series).all()
 
 	def get_all_series_tuples(self):
 		return self._edit_session.query(
