@@ -1,53 +1,42 @@
 import numpy
 import math
-
-
-
-class plotData (object):
-  def __init__(self, sID, dValues, dTimes,  ylabel, title, color ):
-    self.SeriesID= sID
-    self.DataValues = dValues
-    self.DateTimes=dTimes
-
-    self.startDate= min(dTimes)
-    self.endDate=max(dTimes)
-    self.ylabel = ylabel
-    self.title = title
-    self.color = color
-
-class axisData (object):
-  def __init__(self, axisid, axis,  position, side="", rightadjust="", leftadjust="", minx="", maxx=""):
-    self.axisid= axisid
-    self.axis = axis
-    self.rightadjust= rightadjust
-    self.leftadjust = leftadjust
-    self.position = position
-    self.side = side
-    self.minx= minx
-    self.maxx= maxx
-
-  def __repr__(self):
-    return "<AxisData(id:'%s', axis:'%s', pos:'%s', side:'%s', radj:'%s', ladj:'%s')>" % (self.axisid, self.axis, self.position, self.side, self.rightadjust, self.leftadjust)
+##
+##
+##
+##class plotData (object):
+##  def __init__(self, sID, dValues, dTimes,  ylabel, title, color ):
+##    self.SeriesID= sID
+##    self.DataValues = dValues
+##    self.DateTimes=dTimes
+##
+##    self.startDate= min(dTimes)
+##    self.endDate=max(dTimes)
+##    self.ylabel = ylabel
+##    self.title = title
+##    self.color = color
+##
+##class axisData (object):
+##  def __init__(self, axisid, axis,  position, side="", rightadjust="", leftadjust="", minx="", maxx=""):
+##    self.axisid= axisid
+##    self.axis = axis
+##    self.rightadjust= rightadjust
+##    self.leftadjust = leftadjust
+##    self.position = position
+##    self.side = side
+##    self.minx= minx
+##    self.maxx= maxx
+##
+##  def __repr__(self):
+##    return "<AxisData(id:'%s', axis:'%s', pos:'%s', side:'%s', radj:'%s', ladj:'%s')>" % (self.axisid, self.axis, self.position, self.side, self.rightadjust, self.leftadjust)
 
 class PlotOptions(object):
-    # def enum( **enums):
-    #     return type('Enum', (), enums)
-
-    # TimeSeriesType= enum('Both'=3, 'Line'=2, 'Point'=1, 'None'=0)
-    # BoxWhiskerType = enum('Monthly'=0, 'Seasonal'= 2, 'Yearly'=3, 'Overall'=4)
-
-
 
 
     def __init__(self, TSMethod, color, showLegend, useCensoredData, isPlotCensored):
         self.colorList = ['blue', 'green', 'red', 'cyan', 'orange', 'magenta', 'yellow', 'teal', 'purple']
 
-        self.timeSeriesMethod =TSMethod
-        self.isPlotCensored = isPlotCensored
         self.plotColor = self.colorList[color]
-        self.showLegend = showLegend
         self.useCensoredData = useCensoredData
-
 
         self.numBins = 25
         self.binWidth=1.5
@@ -65,7 +54,6 @@ class PlotOptions(object):
 
 class OneSeriesPlotInfo(object):
 
-
     def __init__ (self, prnt):
         self.parent=prnt
 
@@ -82,13 +70,11 @@ class OneSeriesPlotInfo(object):
         self.Probability=None
         self.statistics= None
         self.plotTitle=None
-
         self.color = "Black"
 
         #edit functions
         self.edit = False
         self.plotcolor = None
-
 
 
     def getPlotOptions(self):
@@ -114,7 +100,6 @@ class SeriesPlotInfo(object):
     def UpdateEditSeries(self):
         if self.editID in self._seriesInfos:
             self._seriesInfos[self.editID].dataTable= self.dbConn.getEditDataValuesforGraph()
-
 
     def IsPlotted(self, sid ):
         if int(sid) in self._seriesInfos:

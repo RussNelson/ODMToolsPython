@@ -128,7 +128,7 @@ class frmODMToolsMain(wx.Frame):
 ################ Series Selection Panel ##################
         self.pnlSelector = pnlSeriesSelector.pnlSeriesSelector(id=wxID_PNLSELECTOR, name=u'pnlSelector',
                parent=self.pnlDocking, size=wx.Size(770, 388),
-               style=wx.TAB_TRAVERSAL, dbservice= self.sc)
+               style=wx.TAB_TRAVERSAL, series_service= self.sc)
 
 
 ####################grid##################

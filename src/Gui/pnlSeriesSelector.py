@@ -274,9 +274,9 @@ class pnlSeriesSelector(wx.Panel):
         self.Layout()
 
     def initTableSeries(self):
-##        self.dataRep=MemoryDatabase(self.dbservice)
+##
 
-        self.tableSeries.SetColumns(self.series_service.get_series()[0].get_table_columns())
+        self.tableSeries.SetColumns(self.series_service.get_all_series()[0].get_table_columns())
         self.tableSeries.SetObjects([list(x) for x in self.series_service.get_all_series_tuples()])
 
 
@@ -285,16 +285,19 @@ class pnlSeriesSelector(wx.Panel):
         self.site_code = None
         self.variable_code = None
         #####INIT drop down boxes for Simple Filter
-        self.siteList=self.series_service.get_sites()
+
+        self.siteList = [(s.id, s.code, s.name) for s in self.series_service.get_all_sites() ]
+
 
         for site in self.siteList:
-            self.cbSites.Append(site.site_code+'-'+site.site_name)
+            self.cbSites.Append(site[1] + '-' + site[2])
         self.cbSites.SetSelection(0)
-        self.site_code = self.siteList[0].site_code
+        self.site_code = self.siteList[0][1]
 
-        self.varList= self.series_service.get_variables(self.site_code)
+        self.varList = [(v.id, v.code, v.name) for v in self.series_service.get_all_variables() ]
+
         for var in self.varList:
-            self.cbVariables.Append(var.variable_code+'-'+var.variable_name)
+            self.cbVariables.Append(var[1] + '-' + var[2])
         self.cbVariables.SetSelection(0)
 
     def OnTableRightDown(self, event):
@@ -533,6 +536,7 @@ class pnlSeriesSelector(wx.Panel):
 
     def SelectForPlot(self, selIndex ):
         sid= self.tableSeries.innerList[selIndex][0]
+        mem_db=MemoryDatabase(sid)
         if not self.tableSeries.IsItemChecked(selIndex):
             Publisher.sendMessage(("removePlot"), seriesID=sid)
             self.tableSeries.innerList[selIndex][-1]= False
@@ -540,13 +544,14 @@ class pnlSeriesSelector(wx.Panel):
         else:
             #set isselected value to True
             self.tableSeries.innerList[selIndex][-1]= True
-            self.parent.Parent.addPlot(self.dataRep ,sid)
+            self.parent.Parent.addPlot(mem_db ,sid)
 
         self.Refresh()
 
     def SelectForEdit(self, seriesID):
-        self.dataRep.initEditValues(seriesID)
-        self.parent.Parent.addEdit(seriesID, self.dataRep)
+        self.mem_db=MemoryDatabase(sid)
+        self.mem_db.initEditValues(seriesID)
+        self.parent.Parent.addEdit(seriesID, self.mem_db)
 
 
     def stopEdit(self):
